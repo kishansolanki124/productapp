@@ -61,7 +61,7 @@ class ProductViewModel(private val dbHelper: DatabaseHelper) : ViewModel() {
         }
     }
 
-    private fun fetchFromServer() {
+    fun fetchFromServer() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val apiResponse = apiEndPointsInterface.getProducts()

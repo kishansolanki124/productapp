@@ -6,9 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.productapp.databinding.ItemProductBinding
 import com.app.productapp.db.entity.Product
-import com.app.productapp.pojo.ProductListModel
-import com.app.productapp.utils.MyDiffCallback
-import com.bumptech.glide.Glide
+import com.app.productapp.utils.ProductDiffCallback
 
 
 class ProductListAdapter(private val itemClick: (Product) -> Unit) :
@@ -27,13 +25,14 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
     }
 
     fun setItem(employees: List<Product>) {
-//        if (this.list.isNotEmpty()) {
-//            updateList(productListModel)
-//        } else {
-//            this.list = productListModel
-//            notifyDataSetChanged()
-//        }
-        updateList(employees)
+//        list = employees as ArrayList<Product>
+//        notifyDataSetChanged()
+
+        val diffCallback = ProductDiffCallback(list, employees)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        list.clear()
+        list.addAll(employees)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int = list.size
@@ -59,22 +58,5 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
                 }
             }
         }
-    }
-
-//    fun updateList(newList: ArrayList<Product>) {
-//        val diffResult = DiffUtil.calculateDiff(MyDiffCallback(this.list, newList))
-//        diffResult.dispatchUpdatesTo(this)
-//    }
-
-    private fun updateList(employees: List<Product>) {
-        val diffCallback = MyDiffCallback(this.list, employees)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        list.clear()
-        list.addAll(employees)
-        diffResult.dispatchUpdatesTo(this)
-    }
-
-    fun getListSize(): Int{
-        return list.size
     }
 }

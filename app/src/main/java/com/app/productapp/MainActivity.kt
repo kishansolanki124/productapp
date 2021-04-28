@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         productViewModel.gameListResponseResponseModel.observe(this, { result ->
             result.doIfSuccess { items ->
                 productListAdapter.setItem(items)
-                //binding.rvProducts.scrollToPosition(0)
             }
         })
 
@@ -79,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppConstant.ACTIVITY_RESULT_CODE_100) {
             showProgressDialog()
-            productViewModel.fetchFromDB()
+            productViewModel.fetchFromServer()
         }
     }
 }
