@@ -9,8 +9,6 @@ import com.app.productapp.db.entity.Product
 import com.app.productapp.pojo.ProductListModel
 import com.app.productapp.utils.MyDiffCallback
 import com.bumptech.glide.Glide
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ProductListAdapter(private val itemClick: (Product) -> Unit) :
@@ -29,7 +27,6 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
     }
 
     fun setItem(productListModel: ProductListModel) {
-        //todo use diffutils to add only those values that are not available
 //        if (this.list.isNotEmpty()) {
 //            updateList(productListModel)
 //        } else {
@@ -53,8 +50,7 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
                 binding.product = firebaseMessageModel
 
                 Glide.with(binding.ivProduct.context)
-                    .load(firebaseMessageModel.image + "/?random&t=" + Date().time)
-                    //.load("https://i.imgur.com/DvpvklR.png")
+                    .load(firebaseMessageModel.image)
                     .load(firebaseMessageModel.image)
                     .into(binding.ivProduct)
 

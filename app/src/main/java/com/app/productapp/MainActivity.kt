@@ -8,12 +8,10 @@ import com.app.productapp.adapter.ProductListAdapter
 import com.app.productapp.databinding.ActivityMainBinding
 import com.app.productapp.db.DatabaseBuilder
 import com.app.productapp.db.DatabaseHelperImpl
-import com.app.productapp.utils.ViewModelFactory
-import com.app.productapp.utils.setRecyclerViewLayoutManager
+import com.app.productapp.utils.*
 import com.app.productapp.viewmodel.ProductViewModel
 import com.app.pweapp.apputil.doIfFailure
 import com.app.pweapp.apputil.doIfSuccess
-import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
         productViewModel = ViewModelProvider(
             this, ViewModelFactory(
                 DatabaseHelperImpl(
@@ -48,8 +45,7 @@ class MainActivity : AppCompatActivity() {
                 //showSnackBar(message ?: "Unknown error message", this)
             }
 
-            //todo dismiss loading
-            //dismissProgressDialog()
+            dismissProgressDialog()
         })
 
         setRecyclerViewLayoutManager(binding.rvProducts)
@@ -59,21 +55,21 @@ class MainActivity : AppCompatActivity() {
         }
         binding.rvProducts.adapter = productListAdapter
 
-        //todo add loading
+        showProgressDialog()
         productViewModel.fetchProductWithCoupon()
 
         binding.fbAdd.setOnClickListener {
             startActivityForResult(
                 Intent(this, AddProductActivity::class.java),
-                100
+                AppConstant.ACTIVITY_RESULT_CODE_100
             )
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == 100) {
-            //todo make 100 constant
+        if (resultCode == AppConstant.ACTIVITY_RESULT_CODE_100) {
+            showProgressDialog()
             productViewModel.fetchProductWithCoupon()
         }
     }

@@ -7,13 +7,16 @@ import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.app.productapp.databinding.ActivityAddProductBinding
+import com.app.productapp.db.DatabaseBuilder
+import com.app.productapp.db.DatabaseHelperImpl
 import com.app.productapp.pojo.ProductListModel
-import com.app.productapp.utils.showToast
+import com.app.productapp.utils.*
 import com.app.productapp.viewmodel.ProductViewModel
 import com.app.pweapp.apputil.doIfFailure
 import com.app.pweapp.apputil.doIfSuccess
 
 class AddProductActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var productViewModel: ProductViewModel
 
@@ -23,20 +26,31 @@ class AddProductActivity : AppCompatActivity() {
         binding = ActivityAddProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
+        productViewModel = ViewModelProvider(
+            this, ViewModelFactory(
+                DatabaseHelperImpl(
+                    DatabaseBuilder.getInstance(this)
+                )
+            )
+        ).get(ProductViewModel::class.java)
 
         binding.btAddUpdate.setOnClickListener {
             if (checkFieldsValid()) {
-                //todo add loading
-                productViewModel.addProduct(
-                    ProductListModel.ProductListItem(
-                        name = binding.etTitle.text.toString(),
-                        adjective = binding.etProductAdjective.text.toString(),
-                        material = binding.etProductMaterial.text.toString(),
-                        price = binding.etProductPrice.text.toString(),
-                        color = binding.etColor.text.toString()
+                hideKeyboard(this)
+                if (isConnected()) {
+                    showProgressDialog()
+                    productViewModel.addProduct(
+                        ProductListModel.ProductListItem(
+                            name = binding.etTitle.text.toString(),
+                            adjective = binding.etProductAdjective.text.toString(),
+                            material = binding.etProductMaterial.text.toString(),
+                            price = binding.etProductPrice.text.toString(),
+                            color = binding.etColor.text.toString()
+                        )
                     )
-                )
+                } else {
+                    showSnackBar("No Internet Available")
+                }
             }
         }
 
@@ -44,7 +58,7 @@ class AddProductActivity : AppCompatActivity() {
             result.doIfSuccess { items ->
                 println(items)
                 Handler(Looper.getMainLooper()).postDelayed({
-                    setResult(100)
+                    setResult(AppConstant.ACTIVITY_RESULT_CODE_100)
                     finish()
                 }, 500)
             }
@@ -54,8 +68,7 @@ class AddProductActivity : AppCompatActivity() {
                 //showSnackBar(message ?: "Unknown error message", this)
             }
 
-            //todo dismiss loading
-            //dismissProgressDialog()
+            dismissProgressDialog()
         })
     }
 
