@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dp_10"
+    android:orientation="vertical"
+    tools:context=".AddProductActivity">
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:hint="@string/Product_Name"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/gray_hint"
+        android:textSize="@dimen/sp_14" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:hint="@string/Product_Color"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/gray_hint"
+        android:textSize="@dimen/sp_14" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etProductPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:hint="@string/Product_Price"
+        android:imeOptions="actionNext"
+        android:inputType="numberSigned"
+        android:maxLength="7"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/gray_hint"
+        android:textSize="@dimen/sp_14" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etProductAdjective"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:hint="@string/Product_Adjective"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/gray_hint"
+        android:textSize="@dimen/sp_14" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etProductMaterial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:hint="@string/Product_Material"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/gray_hint"
+        android:textSize="@dimen/sp_14" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btAddUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:background="@color/colorPrimary"
+        android:text="@string/Add_Product"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_16" />
+</LinearLayout>

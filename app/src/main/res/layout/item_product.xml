@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.app.productapp.pojo.ProductListModel.ProductListItem" />
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/llProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:text="@{String.format(@string/name, product.name)}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_14"
+            tools:text="Name: Iphone 11 Pro Max" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProductDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:text="@{String.format(@string/material, product.material)}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_12"
+            tools:text="Description: Iphone 11 Pro Max Description is nothing about the phone but its just a phone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvProductPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:text="@{String.format(@string/rupee, product.price)}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_12"
+            tools:text="Price: 999" />
+
+        <!--        <androidx.appcompat.widget.AppCompatTextView-->
+        <!--            android:id="@+id/tvDiscount"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:padding="@dimen/dp_5"-->
+        <!--            android:textColor="@android:color/black"-->
+        <!--            android:textSize="@dimen/sp_12"-->
+        <!--            bind:productDiscount="@{product}"-->
+        <!--            tools:text="Discount: 10%" />-->
+    </LinearLayout>
+</layout>
