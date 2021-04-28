@@ -18,10 +18,12 @@ class ProductViewModel(private val dbHelper: DatabaseHelper) : ViewModel() {
 
     // for internal usage
     private val _gameListResponseModel = MutableLiveData<ResultOf<ProductListModel>>()
+    private val _networkProductList = MutableLiveData<ResultOf<ProductListModel>>()
     private val _productItem = MutableLiveData<ResultOf<ProductListModel.ProductListItem>>()
 
     // Expose to the outside world
     val gameListResponseResponseModel: LiveData<ResultOf<ProductListModel>> = _gameListResponseModel
+    val networkProductList: LiveData<ResultOf<ProductListModel>> = _networkProductList
     val productItem: LiveData<ResultOf<ProductListModel.ProductListItem>> = _productItem
 
     private var apiEndPointsInterface =
@@ -59,23 +61,30 @@ class ProductViewModel(private val dbHelper: DatabaseHelper) : ViewModel() {
         }
     }
 
-    fun fetchProductWithCoupon() {
+    private fun fetchFromServer() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val apiResponse = apiEndPointsInterface.getProducts()
+                _networkProductList.postValue(ResultOf.Success(apiResponse))
+                if (apiResponse.isNotEmpty()) {
+                    dbHelper.insertAll(apiResponse)
+                }
+            } catch (ioe: IOException) {
+                _networkProductList.postValue(ResultOf.Failure("[IO] error please retry", ioe))
+            } catch (he: HttpException) {
+                _networkProductList.postValue(ResultOf.Failure("[HTTP] error please retry", he))
+            }
+        }
+    }
+
+    fun fetchFromDB() {
         viewModelScope.launch(Dispatchers.IO) {
             val usersFromDb = dbHelper.getUsers()
             val productListModel = ProductListModel()
             productListModel.addAll(usersFromDb)
             _gameListResponseModel.postValue(ResultOf.Success(productListModel))
-            try {
-                val apiResponse = apiEndPointsInterface.getProducts()
-                _gameListResponseModel.postValue(ResultOf.Success(apiResponse))
-                if (apiResponse.isNotEmpty()) {
-                    dbHelper.insertAll(apiResponse)
-                }
-            } catch (ioe: IOException) {
-                _gameListResponseModel.postValue(ResultOf.Failure("[IO] error please retry", ioe))
-            } catch (he: HttpException) {
-                _gameListResponseModel.postValue(ResultOf.Failure("[HTTP] error please retry", he))
-            }
         }
+
+        fetchFromServer()
     }
 }

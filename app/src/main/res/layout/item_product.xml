@@ -31,6 +31,7 @@
                 android:layout_height="@dimen/dp_130"
                 android:layout_margin="@dimen/dp_5"
                 android:scaleType="fitCenter"
+                bind:image="@{product.image}"
                 tools:src="@drawable/fb_add" />
 
 <!--            bind:image="@{product.image}"-->
@@ -47,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_5"
-                    android:text="@{product.name}"
+                    android:text="@{product.id}"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/sp_14"
                     tools:text="Name: Iphone 11 Pro Max" />

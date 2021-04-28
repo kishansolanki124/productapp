@@ -8,6 +8,7 @@ import com.app.productapp.adapter.ProductListAdapter
 import com.app.productapp.databinding.ActivityMainBinding
 import com.app.productapp.db.DatabaseBuilder
 import com.app.productapp.db.DatabaseHelperImpl
+import com.app.productapp.db.entity.Product
 import com.app.productapp.utils.*
 import com.app.productapp.viewmodel.ProductViewModel
 import com.app.pweapp.apputil.doIfFailure
@@ -34,14 +35,22 @@ class MainActivity : AppCompatActivity() {
         ).get(ProductViewModel::class.java)
 
         productViewModel.gameListResponseResponseModel.observe(this, { result ->
-
             result.doIfSuccess { items ->
                 productListAdapter.setItem(items)
-                //showToast("updated item ${items.size}")
+                //binding.rvProducts.scrollToPosition(0)
+            }
+        })
+
+        productViewModel.networkProductList.observe(this, { result ->
+            result.doIfSuccess { items ->
+                val reverse: List<Product> = items.reversed()
+                productListAdapter.setItem(reverse)
+                //binding.rvProducts.scrollToPosition(0)
             }
 
             result.doIfFailure { message, throwable ->
                 println("API Error: $throwable,\n\n$message")
+                message?.let { showToast(it) }
                 //showSnackBar(message ?: "Unknown error message", this)
             }
 
@@ -56,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvProducts.adapter = productListAdapter
 
         showProgressDialog()
-        productViewModel.fetchProductWithCoupon()
+        productViewModel.fetchFromDB()
 
         binding.fbAdd.setOnClickListener {
             startActivityForResult(
@@ -70,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppConstant.ACTIVITY_RESULT_CODE_100) {
             showProgressDialog()
-            productViewModel.fetchProductWithCoupon()
+            productViewModel.fetchFromDB()
         }
     }
 }

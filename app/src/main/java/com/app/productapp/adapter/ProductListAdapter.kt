@@ -26,14 +26,14 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
         holder.bindForecast(list[position])
     }
 
-    fun setItem(productListModel: ProductListModel) {
+    fun setItem(employees: List<Product>) {
 //        if (this.list.isNotEmpty()) {
 //            updateList(productListModel)
 //        } else {
 //            this.list = productListModel
 //            notifyDataSetChanged()
 //        }
-        updateList(productListModel)
+        updateList(employees)
     }
 
     override fun getItemCount(): Int = list.size
@@ -49,10 +49,10 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
 
                 binding.product = firebaseMessageModel
 
-                Glide.with(binding.ivProduct.context)
-                    .load(firebaseMessageModel.image)
-                    .load(firebaseMessageModel.image)
-                    .into(binding.ivProduct)
+//                Glide.with(binding.ivProduct.context)
+//                    .load(firebaseMessageModel.image)
+//                    .load(firebaseMessageModel.image)
+//                    .into(binding.ivProduct)
 
                 itemView.setOnClickListener {
                     itemClick(this)
@@ -72,5 +72,9 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
         list.clear()
         list.addAll(employees)
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun getListSize(): Int{
+        return list.size
     }
 }

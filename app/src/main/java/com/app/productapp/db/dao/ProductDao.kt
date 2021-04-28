@@ -6,11 +6,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.app.productapp.db.entity.Product
 
-
 @Dao
 interface ProductDao {
-
-    @Query("SELECT * FROM product")
+    @Query("SELECT * FROM product ORDER BY cast(id as unsigned) DESC")
     suspend fun getAll(): List<Product>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
