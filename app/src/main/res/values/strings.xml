@@ -12,11 +12,10 @@
     <string name="Save_Product">Save Product</string>
     <string name="Product_Material">Add Material</string>
     <string name="Product_Adjective">Add Adjective</string>
-    <string name="Enter_Title">Enter Product Title</string>
+    <string name="Enter_Title">Enter Product Name</string>
     <string name="Enter_Color">Enter Product Color</string>
     <string name="Enter_Price">Enter Product Price</string>
     <string name="Enter_Adjective">Enter Product Adjective</string>
     <string name="Enter_Material">Enter Product Material</string>
     <string name="Invalid_Price">Price must be greater than 0</string>
-
 </resources>

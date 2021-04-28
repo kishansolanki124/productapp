@@ -1,4 +1,4 @@
-package com.app.productapp
+package com.app.productapp.ui
 
 import android.os.Bundle
 import android.os.Handler
@@ -6,6 +6,7 @@ import android.os.Looper
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.app.productapp.R
 import com.app.productapp.databinding.ActivityAddProductBinding
 import com.app.productapp.db.DatabaseBuilder
 import com.app.productapp.db.DatabaseHelperImpl
@@ -92,27 +93,32 @@ class AddProductActivity : AppCompatActivity() {
     private fun checkFieldsValid(): Boolean {
         return when {
             TextUtils.isEmpty(binding.etTitle.text.toString().trim()) -> {
-                showToast(getString(R.string.Enter_Title))
+                showSnackBar(getString(R.string.Enter_Title))
                 false
             }
 
             TextUtils.isEmpty(binding.etColor.text.toString().trim()) -> {
-                showToast(getString(R.string.Enter_Color))
+                showSnackBar(getString(R.string.Enter_Color))
                 false
             }
 
             TextUtils.isEmpty(binding.etProductPrice.text.toString().trim()) -> {
-                showToast(getString(R.string.Enter_Price))
+                showSnackBar(getString(R.string.Enter_Price))
                 false
             }
 
             (binding.etProductPrice.text.toString().toDouble() <= 0) -> {
-                showToast(getString(R.string.Invalid_Price))
+                showSnackBar(getString(R.string.Invalid_Price))
+                false
+            }
+
+            TextUtils.isEmpty(binding.etProductAdjective.text.toString().trim()) -> {
+                showSnackBar(getString(R.string.Enter_Adjective))
                 false
             }
 
             TextUtils.isEmpty(binding.etProductMaterial.text.toString().trim()) -> {
-                showToast(getString(R.string.Enter_Material))
+                showSnackBar(getString(R.string.Enter_Material))
                 false
             }
 

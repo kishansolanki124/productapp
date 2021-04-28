@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/dp_5"
-                        android:text="@{product.id}"
+                        android:text="@{product.name}"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/sp_14"
                         tools:text="Name: Iphone 11 Pro Max" />
