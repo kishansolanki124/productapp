@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.productapp.databinding.ActivityAddProductBinding
 import com.app.productapp.db.DatabaseBuilder
 import com.app.productapp.db.DatabaseHelperImpl
+import com.app.productapp.db.entity.Product
 import com.app.productapp.pojo.ProductListModel
 import com.app.productapp.utils.*
 import com.app.productapp.viewmodel.ProductViewModel
@@ -19,6 +20,7 @@ class AddProductActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var productViewModel: ProductViewModel
+    private var demandWithProduct: Product? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,15 +41,24 @@ class AddProductActivity : AppCompatActivity() {
                 hideKeyboard(this)
                 if (isConnected()) {
                     showProgressDialog()
-                    productViewModel.addProduct(
-                        ProductListModel.ProductListItem(
-                            name = binding.etTitle.text.toString(),
-                            adjective = binding.etProductAdjective.text.toString(),
-                            material = binding.etProductMaterial.text.toString(),
-                            price = binding.etProductPrice.text.toString(),
-                            color = binding.etColor.text.toString()
-                        )
+                    val productModel = ProductListModel.ProductListItem(
+                        name = binding.etTitle.text.toString(),
+                        adjective = binding.etProductAdjective.text.toString(),
+                        material = binding.etProductMaterial.text.toString(),
+                        price = binding.etProductPrice.text.toString(),
+                        color = binding.etColor.text.toString()
                     )
+
+                    if (null != demandWithProduct) {
+                        productViewModel.editProduct(
+                            productModel,
+                            demandWithProduct!!.id
+                        )
+                    } else {
+                        productViewModel.addProduct(
+                            productModel
+                        )
+                    }
                 } else {
                     showSnackBar("No Internet Available")
                 }
@@ -70,6 +81,12 @@ class AddProductActivity : AppCompatActivity() {
 
             dismissProgressDialog()
         })
+
+        if (null != intent.getSerializableExtra(AppConstant.ADD_PRODUCT)) {
+            demandWithProduct =
+                intent.getSerializableExtra(AppConstant.ADD_PRODUCT) as Product
+            binding.product = demandWithProduct
+        }
     }
 
     private fun checkFieldsValid(): Boolean {

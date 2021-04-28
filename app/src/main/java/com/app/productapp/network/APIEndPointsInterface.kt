@@ -1,9 +1,7 @@
 package com.app.productapp.network
 
 import com.app.productapp.pojo.ProductListModel
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface APIEndPointsInterface {
 
@@ -128,6 +126,12 @@ interface APIEndPointsInterface {
     @POST("products")
     suspend fun addProduct(
         @Body productListItem: ProductListModel.ProductListItem
+    ): ProductListModel.ProductListItem
+
+    @PUT("products/{id}")
+    suspend fun editProduct(
+        @Body productListItem: ProductListModel.ProductListItem,
+        @Path("id") id : String
     ): ProductListModel.ProductListItem
 ////
 ////    @POST(AppConstants.APIEndPoints.SEARCH_PRODUCT_LIST)

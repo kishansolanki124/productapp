@@ -34,24 +34,36 @@
                 bind:image="@{product.image}"
                 tools:src="@drawable/fb_add" />
 
-<!--            bind:image="@{product.image}"-->
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvProductName"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_5"
-                    android:text="@{product.id}"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/sp_14"
-                    tools:text="Name: Iphone 11 Pro Max" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvProductName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dp_5"
+                        android:text="@{product.id}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/sp_14"
+                        tools:text="Name: Iphone 11 Pro Max" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivEdit"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_margin="@dimen/dp_5"
+                        android:src="@drawable/edit" />
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvProductColor"

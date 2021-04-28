@@ -61,6 +61,22 @@ class ProductViewModel(private val dbHelper: DatabaseHelper) : ViewModel() {
         }
     }
 
+    /**
+     * Dispatchers.IO for network or disk operations that takes longer time and runs in background thread
+     */
+    fun editProduct(productListItem: ProductListModel.ProductListItem,id:String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val apiResponse = apiEndPointsInterface.editProduct(productListItem,id)
+                _productItem.postValue(ResultOf.Success(apiResponse))
+            } catch (ioe: IOException) {
+                _productItem.postValue(ResultOf.Failure("[IO] error please retry", ioe))
+            } catch (he: HttpException) {
+                _productItem.postValue(ResultOf.Failure("[HTTP] error please retry", he))
+            }
+        }
+    }
+
     fun fetchFromServer() {
         viewModelScope.launch(Dispatchers.IO) {
             try {

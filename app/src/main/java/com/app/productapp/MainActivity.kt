@@ -59,7 +59,12 @@ class MainActivity : AppCompatActivity() {
         setRecyclerViewLayoutManager(binding.rvProducts)
 
         productListAdapter = ProductListAdapter {
-
+            startActivityForResult(
+                Intent(this, AddProductActivity::class.java).putExtra(
+                    AppConstant.ADD_PRODUCT,
+                    it
+                ), AppConstant.ACTIVITY_RESULT_CODE_100
+            )
         }
         binding.rvProducts.adapter = productListAdapter
 

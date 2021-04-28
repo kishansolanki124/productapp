@@ -9,6 +9,7 @@
     <string name="Product_Color">Product Color</string>
     <string name="Product_Price">Product Price</string>
     <string name="Add_Product">Add Product</string>
+    <string name="Save_Product">Save Product</string>
     <string name="Product_Material">Add Material</string>
     <string name="Product_Adjective">Add Adjective</string>
     <string name="Enter_Title">Enter Product Title</string>

@@ -53,7 +53,7 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
 //                    .load(firebaseMessageModel.image)
 //                    .into(binding.ivProduct)
 
-                itemView.setOnClickListener {
+                binding.ivEdit.setOnClickListener {
                     itemClick(this)
                 }
             }
