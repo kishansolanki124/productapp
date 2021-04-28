@@ -1,6 +1,8 @@
 package com.app.productapp.pojo
 
-class ProductListModel : ArrayList<ProductListModel.ProductListItem>(){
+import com.app.productapp.db.entity.Product
+
+class ProductListModel : ArrayList<Product>() {
     data class ProductListItem(
         var adjective: String = "",
         var color: String = "",

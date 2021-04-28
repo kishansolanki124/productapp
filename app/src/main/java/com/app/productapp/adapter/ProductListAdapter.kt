@@ -2,14 +2,21 @@ package com.app.productapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.productapp.databinding.ItemProductBinding
+import com.app.productapp.db.entity.Product
 import com.app.productapp.pojo.ProductListModel
+import com.app.productapp.utils.MyDiffCallback
+import com.bumptech.glide.Glide
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ProductListAdapter(private val itemClick: (ProductListModel.ProductListItem) -> Unit) :
+
+class ProductListAdapter(private val itemClick: (Product) -> Unit) :
     RecyclerView.Adapter<ProductListAdapter.HomeOffersViewHolder>() {
 
-    private var list: ArrayList<ProductListModel.ProductListItem> = ArrayList()
+    private var list: ArrayList<Product> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOffersViewHolder {
         val binding =
@@ -21,29 +28,53 @@ class ProductListAdapter(private val itemClick: (ProductListModel.ProductListIte
         holder.bindForecast(list[position])
     }
 
-    fun setItem(list: ArrayList<ProductListModel.ProductListItem>) {
+    fun setItem(productListModel: ProductListModel) {
         //todo use diffutils to add only those values that are not available
-        this.list = list
-        notifyDataSetChanged()
+//        if (this.list.isNotEmpty()) {
+//            updateList(productListModel)
+//        } else {
+//            this.list = productListModel
+//            notifyDataSetChanged()
+//        }
+        updateList(productListModel)
     }
 
     override fun getItemCount(): Int = list.size
 
     class HomeOffersViewHolder(
         private val binding: ItemProductBinding,
-        private val itemClick: (ProductListModel.ProductListItem) -> Unit
+        private val itemClick: (Product) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindForecast(
-            firebaseMessageModel: ProductListModel.ProductListItem
+            firebaseMessageModel: Product
         ) {
             with(firebaseMessageModel) {
 
                 binding.product = firebaseMessageModel
+
+                Glide.with(binding.ivProduct.context)
+                    .load(firebaseMessageModel.image + "/?random&t=" + Date().time)
+                    //.load("https://i.imgur.com/DvpvklR.png")
+                    .load(firebaseMessageModel.image)
+                    .into(binding.ivProduct)
 
                 itemView.setOnClickListener {
                     itemClick(this)
                 }
             }
         }
+    }
+
+//    fun updateList(newList: ArrayList<Product>) {
+//        val diffResult = DiffUtil.calculateDiff(MyDiffCallback(this.list, newList))
+//        diffResult.dispatchUpdatesTo(this)
+//    }
+
+    private fun updateList(employees: List<Product>) {
+        val diffCallback = MyDiffCallback(this.list, employees)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        list.clear()
+        list.addAll(employees)
+        diffResult.dispatchUpdatesTo(this)
     }
 }

@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.app.productapp.adapter.ProductListAdapter
 import com.app.productapp.databinding.ActivityMainBinding
+import com.app.productapp.db.DatabaseBuilder
+import com.app.productapp.db.DatabaseHelperImpl
+import com.app.productapp.utils.ViewModelFactory
 import com.app.productapp.utils.setRecyclerViewLayoutManager
 import com.app.productapp.viewmodel.ProductViewModel
 import com.app.pweapp.apputil.doIfFailure
 import com.app.pweapp.apputil.doIfSuccess
+import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,12 +27,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
+        //productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
+        productViewModel = ViewModelProvider(
+            this, ViewModelFactory(
+                DatabaseHelperImpl(
+                    DatabaseBuilder.getInstance(this)
+                )
+            )
+        ).get(ProductViewModel::class.java)
 
         productViewModel.gameListResponseResponseModel.observe(this, { result ->
 
             result.doIfSuccess { items ->
                 productListAdapter.setItem(items)
+                //showToast("updated item ${items.size}")
             }
 
             result.doIfFailure { message, throwable ->
@@ -48,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvProducts.adapter = productListAdapter
 
         //todo add loading
-        productViewModel.getProducts()
+        productViewModel.fetchProductWithCoupon()
 
         binding.fbAdd.setOnClickListener {
             startActivityForResult(
@@ -62,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 100) {
             //todo make 100 constant
-            productViewModel.getProducts()
+            productViewModel.fetchProductWithCoupon()
         }
     }
 }

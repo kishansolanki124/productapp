@@ -34,13 +34,13 @@ class AddProductActivity : AppCompatActivity() {
                         adjective = binding.etProductAdjective.text.toString(),
                         material = binding.etProductMaterial.text.toString(),
                         price = binding.etProductPrice.text.toString(),
-                        color = binding.etColor.text.toString(),
+                        color = binding.etColor.text.toString()
                     )
                 )
             }
         }
 
-        productViewModel.gameListResponseResponseModel.observe(this, { result ->
+        productViewModel.productItem.observe(this, { result ->
             result.doIfSuccess { items ->
                 println(items)
                 Handler(Looper.getMainLooper()).postDelayed({

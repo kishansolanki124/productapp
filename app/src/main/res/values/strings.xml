@@ -2,8 +2,10 @@
     <string name="app_name">Product App</string>
     <string name="Product">Product</string>
     <string name="name">Name: %1$s</string>
+    <string name="color">Color: %1$s</string>
     <string name="rupee">%1$s\u20B9</string>
     <string name="material">Material: %1$s</string>
+    <string name="adjective">Adjective: %1$s</string>
     <string name="Product_Name">Product Name</string>
     <string name="Product_Color">Product Color</string>
     <string name="Product_Price">Product Price</string>

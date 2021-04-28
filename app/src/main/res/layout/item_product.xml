@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="product"
-            type="com.app.productapp.pojo.ProductListModel.ProductListItem" />
+            type="com.app.productapp.db.entity.Product" />
     </data>
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
@@ -15,44 +16,77 @@
         android:layout_margin="@dimen/dp_10"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvProductName"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_5"
-            android:text="@{String.format(@string/name, product.name)}"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_14"
-            tools:text="Name: Iphone 11 Pro Max" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvProductDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_5"
-            android:text="@{String.format(@string/material, product.material)}"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_12"
-            tools:text="Description: Iphone 11 Pro Max Description is nothing about the phone but its just a phone" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivProduct"
+                android:layout_width="@dimen/dp_130"
+                android:layout_height="@dimen/dp_150"
+                android:layout_margin="@dimen/dp_5"
+                android:scaleType="fitCenter"
+                bind:image="@{product.image}"
+                tools:src="@drawable/fb_add" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvProductPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp_5"
-            android:text="@{String.format(@string/rupee, product.price)}"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_12"
-            tools:text="Price: 999" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
 
-        <!--        <androidx.appcompat.widget.AppCompatTextView-->
-        <!--            android:id="@+id/tvDiscount"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:padding="@dimen/dp_5"-->
-        <!--            android:textColor="@android:color/black"-->
-        <!--            android:textSize="@dimen/sp_12"-->
-        <!--            bind:productDiscount="@{product}"-->
-        <!--            tools:text="Discount: 10%" />-->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:text="@{String.format(@string/name, product.name)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="Name: Iphone 11 Pro Max" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvProductColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:text="@{String.format(@string/color, product.color)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="color: Red" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvProductPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:text="@{String.format(@string/rupee, product.price)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="Price: 999" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvProductDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:text="@{String.format(@string/material, product.material)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="Material: Copper" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAdjective"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:text="@{String.format(@string/adjective, product.adjective)}"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="Adjective: adjective" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </layout>
