@@ -18,4 +18,6 @@
     <string name="Enter_Adjective">Enter Product Adjective</string>
     <string name="Enter_Material">Enter Product Material</string>
     <string name="Invalid_Price">Price must be greater than 0</string>
+    <string name="no_internet">No Internet Available</string>
+    <string name="Product_save_success">Product Saved Successfully</string>
 </resources>

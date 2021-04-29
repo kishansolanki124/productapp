@@ -11,6 +11,9 @@ interface ProductDao {
     @Query("SELECT * FROM product ORDER BY cast(id as unsigned) DESC")
     suspend fun getAll(): List<Product>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(users: List<Product>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)//if value exist then will be replace, restricting duplicate entries
+    suspend fun insertAll(products: List<Product>)
+
+    @Query("DELETE FROM product")
+    suspend fun deleteAll()
 }

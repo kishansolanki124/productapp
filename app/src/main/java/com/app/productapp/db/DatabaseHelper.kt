@@ -4,7 +4,9 @@ import com.app.productapp.db.entity.Product
 
 interface DatabaseHelper {
 
-    suspend fun getUsers(): List<Product>
+    suspend fun getProducts(): List<Product>
 
-    suspend fun insertAll(users: List<Product>)
+    suspend fun insertAll(products: List<Product>)
+
+    suspend fun deleteAll()
 }

@@ -1,4 +1,4 @@
-package com.app.pweapp.apputil
+package com.app.productapp.utils
 
 sealed class ResultOf<out T> {
     data class Success<out R>(val value: R) : ResultOf<R>()

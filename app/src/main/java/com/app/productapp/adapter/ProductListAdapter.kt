@@ -8,7 +8,6 @@ import com.app.productapp.databinding.ItemProductBinding
 import com.app.productapp.db.entity.Product
 import com.app.productapp.utils.ProductDiffCallback
 
-
 class ProductListAdapter(private val itemClick: (Product) -> Unit) :
     RecyclerView.Adapter<ProductListAdapter.HomeOffersViewHolder>() {
 
@@ -24,14 +23,11 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
         holder.bindForecast(list[position])
     }
 
-    fun setItem(employees: List<Product>) {
-//        list = employees as ArrayList<Product>
-//        notifyDataSetChanged()
-
-        val diffCallback = ProductDiffCallback(list, employees)
+    fun setItem(products: List<Product>) {
+        val diffCallback = ProductDiffCallback(list, products)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         list.clear()
-        list.addAll(employees)
+        list.addAll(products)
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -45,14 +41,7 @@ class ProductListAdapter(private val itemClick: (Product) -> Unit) :
             firebaseMessageModel: Product
         ) {
             with(firebaseMessageModel) {
-
                 binding.product = firebaseMessageModel
-
-//                Glide.with(binding.ivProduct.context)
-//                    .load(firebaseMessageModel.image)
-//                    .load(firebaseMessageModel.image)
-//                    .into(binding.ivProduct)
-
                 binding.ivEdit.setOnClickListener {
                     itemClick(this)
                 }

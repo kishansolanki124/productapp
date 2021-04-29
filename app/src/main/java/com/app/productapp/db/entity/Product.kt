@@ -7,7 +7,7 @@ import java.io.Serializable
 
 @Entity
 data class Product(
-    @PrimaryKey @ColumnInfo(name = "id", defaultValue = "") val id: String,
+    @PrimaryKey val id: String,
     @ColumnInfo(name = "name", defaultValue = "") val name: String,
     @ColumnInfo(name = "adjective", defaultValue = "") val adjective: String,
     @ColumnInfo(name = "price", defaultValue = "") val price: String,

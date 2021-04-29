@@ -1,4 +1,4 @@
-package com.app.pweapp.apputil
+package com.app.productapp.utils
 
 inline fun <reified T> ResultOf<T>.doIfFailure(callback: (error: String?, throwable: Throwable?) -> Unit) {
     if (this is ResultOf.Failure) {

@@ -32,27 +32,6 @@ object RetrofitFactory {
                                 .newBuilder()
                                 .build()
                             return chain.proceed(request)
-//                            if (SPreferenceManager.getInstance(GroceriesApplication.getApplication()).isLogin) {
-//                                val request: Request = chain.request()
-//                                    .newBuilder()
-//                                    .addHeader(
-//                                        AppConstants.APIHeaders.USER_ID,
-//                                        SPreferenceManager.getInstance(GroceriesApplication.getApplication())
-//                                            .session!!.userId!!.toString()
-//                                    )
-//                                    .addHeader(
-//                                        AppConstants.APIHeaders.AUTHORISATION,
-//                                        SPreferenceManager.getInstance(GroceriesApplication.getApplication())
-//                                            .session!!.jwtToken!!
-//                                    )
-//                                    .build()
-//                                return chain.proceed(request)
-//                            } else {
-//                                val request: Request = chain.request()
-//                                    .newBuilder()
-//                                    .build()
-//                                return chain.proceed(request)
-//                            }
                         }
                     }
                 )

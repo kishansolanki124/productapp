@@ -14,34 +14,34 @@ import com.app.productapp.db.entity.Product
 import com.app.productapp.pojo.ProductListModel
 import com.app.productapp.utils.*
 import com.app.productapp.viewmodel.ProductViewModel
-import com.app.pweapp.apputil.doIfFailure
-import com.app.pweapp.apputil.doIfSuccess
 
 class AddProductActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddProductBinding
     private lateinit var productViewModel: ProductViewModel
-    private var demandWithProduct: Product? = null
+    private var existingProduct: Product? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityAddProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        productViewModel = ViewModelProvider(
-            this, ViewModelFactory(
-                DatabaseHelperImpl(
-                    DatabaseBuilder.getInstance(this)
-                )
-            )
-        ).get(ProductViewModel::class.java)
+        if (null != intent.getSerializableExtra(AppConstant.ADD_PRODUCT)) {
+            existingProduct =
+                intent.getSerializableExtra(AppConstant.ADD_PRODUCT) as Product
+            binding.product = existingProduct
+        }
 
+        initViewModel()
+        setupClickListener()
+    }
+
+    private fun setupClickListener() {
         binding.btAddUpdate.setOnClickListener {
             if (checkFieldsValid()) {
                 hideKeyboard(this)
                 if (isConnected()) {
-                    showProgressDialog()
+                    showProgressDialog(this)
                     val productModel = ProductListModel.ProductListItem(
                         name = binding.etTitle.text.toString(),
                         adjective = binding.etProductAdjective.text.toString(),
@@ -50,10 +50,10 @@ class AddProductActivity : AppCompatActivity() {
                         color = binding.etColor.text.toString()
                     )
 
-                    if (null != demandWithProduct) {
+                    if (null != existingProduct) {
                         productViewModel.editProduct(
                             productModel,
-                            demandWithProduct!!.id
+                            existingProduct!!.id
                         )
                     } else {
                         productViewModel.addProduct(
@@ -61,14 +61,25 @@ class AddProductActivity : AppCompatActivity() {
                         )
                     }
                 } else {
-                    showSnackBar("No Internet Available")
+                    showSnackBar(getString(R.string.no_internet))
                 }
             }
         }
+    }
+
+    private fun initViewModel() {
+        productViewModel = ViewModelProvider(
+            this, ViewModelFactory(
+                DatabaseHelperImpl(
+                    DatabaseBuilder.getInstance(this)
+                )
+            )
+        ).get(ProductViewModel::class.java)
 
         productViewModel.productItem.observe(this, { result ->
             result.doIfSuccess { items ->
                 println(items)
+                showToast(getString(R.string.Product_save_success))
                 Handler(Looper.getMainLooper()).postDelayed({
                     setResult(AppConstant.ACTIVITY_RESULT_CODE_100)
                     finish()
@@ -77,17 +88,11 @@ class AddProductActivity : AppCompatActivity() {
 
             result.doIfFailure { message, throwable ->
                 println("API Error: $throwable,\n\n$message")
-                //showSnackBar(message ?: "Unknown error message", this)
+                showSnackBar(message ?: "Unknown error message")
             }
 
             dismissProgressDialog()
         })
-
-        if (null != intent.getSerializableExtra(AppConstant.ADD_PRODUCT)) {
-            demandWithProduct =
-                intent.getSerializableExtra(AppConstant.ADD_PRODUCT) as Product
-            binding.product = demandWithProduct
-        }
     }
 
     private fun checkFieldsValid(): Boolean {

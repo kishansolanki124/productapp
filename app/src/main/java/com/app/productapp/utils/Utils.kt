@@ -90,14 +90,14 @@ fun getDate(milliSeconds: Long, dateFormat: String?): String {
 
 private var pgDialog: Dialog? = null
 
-fun Context.showProgressDialog() {
+fun showProgressDialog(context: Context) {
     if (pgDialog == null) {
-        pgDialog = getProgressDialog(this)
+        pgDialog = getProgressDialog(context)
         pgDialog?.show()
     }
 }
 
-fun getProgressDialog(context: Context): Dialog? {
+fun getProgressDialog(context: Context): Dialog {
     val progressDialog = Dialog(context)
     val view: View =
         LayoutInflater.from(context).inflate(R.layout.dialog_progress, null, false)
